@@ -227,6 +227,7 @@
     const tutorialCloseButton = document.getElementById('tutorial-close-button');
 
     const CELL_SIZE = 90;
+    // ▼▼▼ ステージ設計図を全20ステージに修正 ▼▼▼
     const stages = [
       { id: 1, bestScore: 1, start: { x: 4, y: 4, dir: 1 }, goal: { x: 184, y: 4 }, 
         walls: [ {x:0, y:1}, {x:1, y:1}, {x:2, y:1}, {x:3, y:1}, {x:4, y:1}, {x:0, y:2}, {x:1, y:2}, {x:2, y:2}, {x:3, y:2}, {x:4, y:2}, {x:0, y:3}, {x:1, y:3}, {x:2, y:3}, {x:3, y:3}, {x:4, y:3}, {x:0, y:4}, {x:1, y:4}, {x:2, y:4}, {x:3, y:4}, {x:4, y:4}, ],
@@ -257,16 +258,6 @@
       { id: 18, bestScore: 6, start: { x: 4, y: 4, dir: 2 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:1},{x:2,y:1},{x:3,y:1}, {x:1,y:3},{x:2,y:3},{x:3,y:3}] },
       { id: 19, bestScore: 5, start: { x: 364, y: 184, dir: 3}, goal: { x: 4, y: 184}, walls: [{x:2,y:0},{x:1,y:2},{x:3,y:2},{x:2,y:3},{x:2,y:4}]},
       { id: 20, bestScore: 4, start: { x: 4, y: 4, dir: 1 }, goal: { x: 184, y: 4 }, walls: [{x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3}] },
-      { id: 21, bestScore: 6, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:0},{x:1,y:1},{x:1,y:2}, {x:3,y:3},{x:3,y:4}] },
-      { id: 22, bestScore: 8, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:1},{x:1,y:2}, {x:2,y:3},{x:2,y:4}, {x:3,y:0},{x:3,y:1}] },
-      { id: 23, bestScore: 4, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:0},{x:1,y:2},{x:1,y:3},{x:1,y:4}, {x:3,y:0},{x:3,y:1},{x:3,y:2},{x:3,y:4}] },
-      { id: 24, bestScore: 4, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [{x:2,y:0},{x:2,y:1},{x:2,y:3},{x:2,y:4}] },
-      { id: 25, bestScore: 8, start: { x: 274, y: 4, dir: 2 }, goal: { x: 94, y: 4 }, walls: [{x:0,y:2},{x:1,y:1},{x:2,y:1},{x:3,y:1},{x:4,y:1}, {x:1,y:3},{x:3,y:3},{x:2,y:2}] },
-      { id: 26, bestScore: 7, start: { x: 4, y: 4, dir: 2 }, goal: { x: 364, y: 364 }, walls: [{x:0,y:1},{x:1,y:1},{x:3,y:1},{x:4,y:1}, {x:1,y:3},{x:3,y:3},{x:4,y:3}] },
-      { id: 27, bestScore: 7, start: { x: 4, y: 184, dir: 1 }, goal: { x: 364, y: 184 }, walls: [{x:2,y:0},{x:2,y:1}, {x:1,y:2},{x:3,y:2}, {x:2,y:3},{x:2,y:4}] },
-      { id: 28, bestScore: 10, start: { x: 184, y: 4, dir: 1 }, goal: { x: 184, y: 364 }, walls: [{x:1,y:1},{x:1,y:2},{x:1,y:3}, {x:2,y:1},{x:2,y:3}, {x:3,y:1},{x:3,y:2},{x:3,y:3}] },
-      { id: 29, bestScore: 8, start: { x: 94, y: 94, dir: 1 }, goal: { x: 274, y: 274 }, walls: [{x:1,y:2},{x:2,y:1},{x:2,y:3},{x:3,y:2}] },
-      { id: 30, bestScore: 9, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:1},{x:3,y:1},{x:1,y:3},{x:3,y:3},{x:2,y:0},{x:0,y:2},{x:4,y:2},{x:2,y:4}] },
     ];
     // 基本的な遊び方
     const basicTutorial = { title: "あそびかた", text: "① みぎのブロックを まんなかのエリアに\nドラッグ＆ドロップで もっていこう！\n\n②「じっこう！」ボタンをおすと、\nあるごんが うごきだすよ！\n\n③ まちがえたブロックは、エリアのそとに\nドラッグ＆ドロップすると けせるよ！" };
@@ -293,8 +284,9 @@
     // --- 画面切り替え & ステージ選択 ---
     function showScreen(screenName) { for (const key in screens) { screens[key].classList.add('hidden'); } screens[screenName].classList.remove('hidden'); }
     
+    // ▼▼▼ ステージロックを有効化 ▼▼▼
     function populateStageSelect() {
-      // const unlockedStage = parseInt(localStorage.getItem('algonQuestUnlockedStage') || '1'); // ★完成版で元に戻す
+      const unlockedStage = parseInt(localStorage.getItem('algonQuestUnlockedStage') || '1');
       const scores = JSON.parse(localStorage.getItem('algonQuestScores') || '{}');
       stageGrid.innerHTML = '';
       
@@ -302,7 +294,7 @@
         const button = document.createElement('button');
         button.className = 'stage-button';
         
-        // if (stage.id <= unlockedStage) { // ★完成版で元に戻す
+        if (stage.id <= unlockedStage) {
           const stageNum = document.createElement('div');
           stageNum.className = 'stage-number';
           stageNum.textContent = stage.id;
@@ -313,10 +305,10 @@
           button.appendChild(stageNum);
           button.appendChild(starRating);
           button.addEventListener('click', () => { currentStageData = stage; setupStage(); showScreen('game'); });
-        // } else {
-        //   button.innerHTML = '🔒';
-        //   button.disabled = true;
-        // }
+        } else {
+          button.innerHTML = '🔒';
+          button.disabled = true;
+        }
         stageGrid.appendChild(button);
       });
     }
@@ -375,7 +367,7 @@
     function showModal(message, type, data = {}) {
       modalOverlay.dataset.resultType = type;
       document.getElementById('modal-message').innerText = message;
-      document.getElementById('modal-content').className = '';
+      document.getElementById('modal-content').className = 'modal-content';
       const modalStars = document.getElementById('modal-stars');
       if (type === 'success') {
         document.getElementById('modal-content').classList.add('success');
