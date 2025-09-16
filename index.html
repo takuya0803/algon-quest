@@ -153,7 +153,7 @@
 <body>
 
   <div id="title-screen" class="screen">
-    <h1>あるごん・クエスト（調整中　09/16 16:00）</h1>
+    <h1>あるごん・クエスト</h1>
     <div id="title-buttons">
       <button id="start-button" class="title-button">スタート！</button>
       <button id="tutorial-button" class="title-button">あそびかた</button>
@@ -227,7 +227,7 @@
     const tutorialCloseButton = document.getElementById('tutorial-close-button');
 
     const CELL_SIZE = 90;
-    // ▼▼▼ ステージ設計図を全20ステージに修正 ▼▼▼
+    // ▼▼▼ ステージ設計図を更新 ▼▼▼
     const stages = [
       { id: 1, bestScore: 1, start: { x: 4, y: 4, dir: 1 }, goal: { x: 184, y: 4 }, 
         walls: [ {x:0, y:1}, {x:1, y:1}, {x:2, y:1}, {x:3, y:1}, {x:4, y:1}, {x:0, y:2}, {x:1, y:2}, {x:2, y:2}, {x:3, y:2}, {x:4, y:2}, {x:0, y:3}, {x:1, y:3}, {x:2, y:3}, {x:3, y:3}, {x:4, y:3}, {x:0, y:4}, {x:1, y:4}, {x:2, y:4}, {x:3, y:4}, {x:4, y:4}, ],
@@ -238,26 +238,28 @@
         tutorial: { title: "かずを いれてみよう！", text: "ブロックの しかくいマスに すうじをいれると、\nその かずだけ うごきを くりかえすよ！\n\n『まえに 4かい』やってみよう！" }
       },
       { id: 3, bestScore: 1, start: { x: 4, y: 364, dir: 0 }, goal: { x: 4, y: 4 }, walls: [ {x:1, y:0}, {x:1, y:1}, {x:1, y:2}, {x:1, y:3}, {x:1, y:4}, {x:2, y:0}, {x:2, y:1}, {x:2, y:2}, {x:2, y:3}, {x:2, y:4}, {x:3, y:0}, {x:3, y:1}, {x:3, y:2}, {x:3, y:3}, {x:3, y:4}, {x:4, y:0}, {x:4, y:1}, {x:4, y:2}, {x:4, y:3}, {x:4, y:4}, ] },
-      { id: 4, bestScore: 3, start: { x: 4, y: 364, dir: 0 }, goal: { x: 364, y: 4 }, walls: [ {x:1,y:1},{x:1,y:2},{x:1,y:3},{x:1,y:4}, {x:2,y:1},{x:2,y:2},{x:2,y:3},{x:2,y:4}, {x:3,y:1},{x:3,y:2},{x:3,y:3},{x:3,y:4}, {x:4,y:1},{x:4,y:2},{x:4,y:3},{x:4,y:4}, ] },
-      { id: 5, bestScore: 3, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [ {x:0,y:1},{x:1,y:1},{x:2,y:1},{x:3,y:1}, {x:0,y:2},{x:1,y:2},{x:2,y:2},{x:3,y:2}, {x:0,y:3},{x:1,y:3},{x:2,y:3},{x:3,y:3}, {x:0,y:4},{x:1,y:4},{x:2,y:4},{x:3,y:4}, ] },
-      { id: 6, bestScore: 3, start: { x: 4, y: 4, dir: 2 }, goal: { x: 4, y: 274 }, 
-        walls: [{x:1,y:1},{x:2,y:1},{x:3,y:1},{x:4,y:1}],
-        tutorial: { title: "むきを かえてみよう！", text: "『みぎに』や『ひだりに』ブロックをつかうと、\nあるごんの むきが かわるよ。\n\nうまく つかって ゴールを めざそう！" }
+      { id: 4, bestScore: 1, start: { x: 4, y: 364, dir: 1 }, goal: { x: 364, y: 364 }, 
+        walls: [ {x:0,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:4,y:0}, {x:0,y:1},{x:1,y:1},{x:2,y:1},{x:3,y:1},{x:4,y:1}, {x:0,y:2},{x:1,y:2},{x:2,y:2},{x:3,y:2},{x:4,y:2}, {x:0,y:3},{x:1,y:3},{x:2,y:3},{x:3,y:3},{x:4,y:3} ],
+        tutorial: { title: "かべを よけてみよう！", text: "かべが あって まっすぐ すすめないときは、\nむきを かえて うまく よけていこう！" }
       },
+      { id: 5, bestScore: 1, start: { x: 364, y: 364, dir: 0 }, goal: { x: 364, y: 4 }, 
+        walls: [ {x:0,y:0},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:0,y:4}, {x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3},{x:1,y:4}, {x:2,y:0},{x:2,y:1},{x:2,y:2},{x:2,y:3},{x:2,y:4}, {x:3,y:0},{x:3,y:1},{x:3,y:2},{x:3,y:3},{x:3,y:4} ] 
+      },
+      { id: 6, bestScore: 3, start: { x: 364, y: 4, dir: 3 }, goal: { x: 4, y: 4 }, walls: [{x:0,y:1},{x:1,y:1},{x:2,y:1},{x:3,y:1},{x:4,y:1}] },
       { id: 7, bestScore: 4, start: { x: 4, y: 4, dir: 1 }, goal: { x: 4, y: 364 }, walls: [{x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3}] },
       { id: 8, bestScore: 3, start: { x: 184, y: 364, dir: 0 }, goal: { x: 4, y: 4 }, walls: [{x:1,y:2},{x:3,y:2},{x:4,y:2}] },
-      { id: 9, bestScore: 5, start: { x: 4, y: 184, dir: 1 }, goal: { x: 364, y: 184 }, walls: [{x:2,y:0},{x:2,y:1},{x:2,y:3},{x:2,y:4}] },
-      { id: 10, bestScore: 5, start: { x: 4, y: 4, dir: 1 }, goal: { x: 364, y: 364 }, walls: [ {x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3}, {x:3,y:1},{x:3,y:2},{x:3,y:3},{x:3,y:4} ] },
-      { id: 11, bestScore: 4, start: { x: 4, y: 4, dir: 2 }, goal: { x: 184, y: 94 }, walls: [{x:1,y:0},{x:1,y:1},{x:2,y:2},{x:3,y:2},{x:3,y:1}] },
-      { id: 12, bestScore: 7, start: { x: 4, y: 4, dir: 2 }, goal: { x: 274, y: 184 }, walls: [{x:1,y:1},{x:3,y:1},{x:4,y:1}, {x:2,y:2}, {x:0,y:3},{x:3,y:3}] },
-      { id: 13, bestScore: 4, start: { x: 184, y: 184, dir: 1 }, goal: { x: 184, y: 184 }, walls: [ {x:3,y:2},{x:2,y:1},{x:1,y:2},{x:2,y:3} ] },
+      { id: 9, bestScore: 5, start: { x: 4, y: 184, dir: 1 }, goal: { x: 274, y: 274 }, walls: [{x:2,y:0},{x:2,y:1},{x:2,y:3},{x:2,y:4}] },
+      { id: 10, bestScore: 5, start: { x: 4, y: 364, dir: 4 }, goal: { x: 364, y: 4 }, walls: [ {x:1,y:1},{x:1,y:2},{x:1,y:3},{x:1,y:4},{x:2,y:1},{x:3,y:1},{x:4,y:1} ] },
+      { id: 11, bestScore: 4, start: { x: 4, y: 4, dir: 2 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3},{x:2,y:3},{x:3,y:3},{x:4,y:3}] },
+      { id: 12, bestScore: 7, start: { x: 4, y: 364, dir: 4 }, goal: { x: 274, y: 184 }, walls: [{x:0,y:0},{x:1,y:1},{x:1,y:3},{x:3,y:1},{x:4,y:1},{x:3,y:3}] },
+      { id: 13, bestScore: 4, start: { x: 364, y: 364, dir: 3 }, goal: { x: 4, y: 184 }, walls: [ {x:3,y:2},{x:2,y:1},{x:1,y:2},{x:2,y:3} ] },
       { id: 14, bestScore: 5, start: { x: 364, y: 364, dir: 0 }, goal: { x: 4, y: 4 }, walls: [{x:1,y:1},{x:1,y:2},{x:1,y:3}, {x:3,y:1},{x:3,y:2},{x:3,y:3}] },
-      { id: 15, bestScore: 5, start: { x: 4, y: 4, dir: 1 }, goal: { x: 4, y: 4 }, walls: [{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:4,y:0},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:1,y:4},{x:2,y:4},{x:3,y:4},{x:4,y:4},{x:4,y:3},{x:4,y:2},{x:4,y:1}] },
-      { id: 16, bestScore: 4, start: { x: 4, y: 274, dir: 0 }, goal: { x: 364, y: 4 }, walls: [ {x:1,y:0},{x:1,y:1},{x:1,y:2}, {x:3,y:2},{x:3,y:3},{x:3,y:4}] },
-      { id: 17, bestScore: 6, start: { x: 4, y: 4, dir: 2 }, goal: { x: 364, y: 364 }, walls: [ {x:1,y:0},{x:1,y:1},{x:1,y:2}, {x:3,y:4},{x:3,y:3},{x:3,y:2} ] },
-      { id: 18, bestScore: 6, start: { x: 4, y: 4, dir: 2 }, goal: { x: 364, y: 364 }, walls: [{x:1,y:1},{x:2,y:1},{x:3,y:1}, {x:1,y:3},{x:2,y:3},{x:3,y:3}] },
-      { id: 19, bestScore: 5, start: { x: 364, y: 184, dir: 3}, goal: { x: 4, y: 184}, walls: [{x:2,y:0},{x:1,y:2},{x:3,y:2},{x:2,y:3},{x:2,y:4}]},
-      { id: 20, bestScore: 4, start: { x: 4, y: 4, dir: 1 }, goal: { x: 184, y: 4 }, walls: [{x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3}] },
+      { id: 15, bestScore: 5, start: { x: 184, y: 184, dir: 1 }, goal: { x: 364, y: 274 }, walls: [{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:4,y:0},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:1,y:4},{x:2,y:4},{x:3,y:4},{x:4,y:4},{x:4,y:2},{x:4,y:1}] },
+      { id: 16, bestScore: 4, start: { x: 4, y: 274, dir: 0 }, goal: { x: 364, y: 4 }, walls: [ {x:1,y:0},{x:1,y:2}, {x:3,y:2},{x:3,y:3},{x:3,y:4}] },
+      { id: 17, bestScore: 6, start: { x: 4, y: 4, dir: 2 }, goal: { x: 364, y: 364 }, walls: [ {x:0,y:2},{x:2,y:2},{x:1,y:2}, {x:3,y:4},{x:3,y:3},{x:3,y:2} ] },
+      { id: 18, bestScore: 6, start: { x: 4, y: 364, dir: 4 }, goal: { x: 364, y: 4 }, walls: [{x:0,y:1},{x:1,y:1},{x:2,y:1},{x:3,y:1}, {x:1,y:3},{x:2,y:3},{x:3,y:3},{x:4,y:3}] },
+      { id: 19, bestScore: 5, start: { x: 364, y: 184, dir: 4}, goal: { x: 4, y: 184}, walls: [{x:2,y:0},{x:1,y:2},{x:3,y:2},{x:2,y:3},{x:2,y:4}]},
+      { id: 20, bestScore: 4, start: { x: 364, y: 364, dir: 4 }, goal: { x: 4, y: 4 }, walls: [{x:1,y:0},{x:1,y:1},{x:1,y:2},{x:1,y:3},{x:3,y:1},{x:3,y:2},{x:3,y:3},{x:3,y:4}] },
     ];
     // 基本的な遊び方
     const basicTutorial = { title: "あそびかた", text: "① みぎのブロックを まんなかのエリアに\nドラッグ＆ドロップで もっていこう！\n\n②「じっこう！」ボタンをおすと、\nあるごんが うごきだすよ！\n\n③ まちがえたブロックは、エリアのそとに\nドラッグ＆ドロップすると けせるよ！" };
@@ -284,9 +286,9 @@
     // --- 画面切り替え & ステージ選択 ---
     function showScreen(screenName) { for (const key in screens) { screens[key].classList.add('hidden'); } screens[screenName].classList.remove('hidden'); }
     
-    // ▼▼▼ ステージロックを有効化 ▼▼▼
     function populateStageSelect() {
-      const unlockedStage = parseInt(localStorage.getItem('algonQuestUnlockedStage') || '1');
+      // ▼▼▼ ステージロックを一時的に解除 ▼▼▼
+      const unlockedStage = stages.length; // 全ステージをアンロック
       const scores = JSON.parse(localStorage.getItem('algonQuestScores') || '{}');
       stageGrid.innerHTML = '';
       
@@ -338,7 +340,12 @@
       runButton.disabled = false; resetButton.disabled = false;
 
       if(currentStageData.tutorial){
-        showTutorial(currentStageData.tutorial);
+        const tutorialsShown = JSON.parse(localStorage.getItem('algonQuestTutorialsShown') || '{}');
+        if (!tutorialsShown[currentStageData.id]) {
+            showTutorial(currentStageData.tutorial);
+            tutorialsShown[currentStageData.id] = true;
+            localStorage.setItem('algonQuestTutorialsShown', JSON.stringify(tutorialsShown));
+        }
       }
     }
     function updateAlgonPosition() { algon.style.left = algonX + 'px'; algon.style.top = algonY + 'px'; algon.style.transform = `rotate(${algonDirection * 90}deg)`; }
@@ -409,6 +416,4 @@
   </script>
 </body>
 </html>
-
-
 
